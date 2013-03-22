@@ -357,7 +357,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
     WhereOrderLimit.prototype._limitString = function() {
       if (this.limits) {
-        return " LIMIT " + this.limits;
+        return " TOP " + this.limits + " ";
       } else {
         return "";
       }
@@ -533,6 +533,7 @@ OTHER DEALINGS IN THE SOFTWARE.
         throw new Error("from() needs to be called");
       }
       ret = "SELECT ";
+      ret += this._limitString();
       if (this.useDistinct) {
         ret += "DISTINCT ";
       }
@@ -577,7 +578,6 @@ OTHER DEALINGS IN THE SOFTWARE.
         ret += " GROUP BY " + groups;
       }
       ret += this._orderString();
-      ret += this._limitString();
       if (this.offsets) {
         ret += " OFFSET " + this.offsets;
       }
